@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "ea89ff08-bcb8-404e-8ad9-1599b1affb4b",
+		"name": "Node37 - Pinterest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "17651370"
+	},
+	"item": [
+		{
+			"name": "[auth] Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"john1234@example.com\",\r\n    \"mat_khau\": \"123123\",\r\n    \"ho_ten\": \"Phuc\",\r\n    \"ngay_sinh\": \"2023-11-19 00:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "[auth] Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"phuc24\",\r\n    \"mat_khau\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "localhost:8080/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "[user] get Info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/user/info"
+			},
+			"response": []
+		},
+		{
+			"name": "[user] update Info",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ho_ten\": \"JOHN PHUC\",\r\n    \"ngay_sinh\": \"1997-11-19 00:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/user/update-info"
+			},
+			"response": []
+		},
+		{
+			"name": "[user] update Password",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mat_khau\": \"1234\",\r\n    \"mat_khau_moi\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/user/update-password"
+			},
+			"response": []
+		},
+		{
+			"name": "[user] update Avatar",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Download/masteri.jpg"
+						}
+					]
+				},
+				"url": "{{domain}}/user/update-avatar"
+			},
+			"response": []
+		},
+		{
+			"name": "[image] get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{domain}}/image"
+			},
+			"response": []
+		},
+		{
+			"name": "[image] get All + Saved",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/image/saved-info"
+			},
+			"response": []
+		},
+		{
+			"name": "[image] get User Uploaded",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "localhost:8080/image/user-uploaded"
+			},
+			"response": []
+		},
+		{
+			"name": "[image] get Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{domain}}/image/search/?s=test",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"search",
+						""
+					],
+					"query": [
+						{
+							"key": "s",
+							"value": "test"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[image] get Detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/image/detail/94"
+			},
+			"response": []
+		},
+		{
+			"name": "[image] Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/image/95"
+			},
+			"response": []
+		},
+		{
+			"name": "[Image] Upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Download/AllSizeImg/z4964511887208_f2d324a46b8d7d472e58364787f763ff.jpg"
+						},
+						{
+							"key": "ten_hinh",
+							"value": "new img",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{domain}}/image/upload"
+			},
+			"response": []
+		},
+		{
+			"name": "[image-saved] get User Saved",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/saved-image"
+			},
+			"response": []
+		},
+		{
+			"name": "[image-saved] get Saved check",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/saved-image/check/94"
+			},
+			"response": []
+		},
+		{
+			"name": "[image-saved] save",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/saved-image/save/94"
+			},
+			"response": []
+		},
+		{
+			"name": "[image-saved] unsave",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"url": "{{domain}}/saved-image/unsave/94"
+			},
+			"response": []
+		},
+		{
+			"name": "[comment] get List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{domain}}/comment/94"
+			},
+			"response": []
+		},
+		{
+			"name": "[comment] post new",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{GlobalToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"hinh_id\": \"94\",\r\n    \"noi_dung\": \"asdddd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{domain}}/comment/"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "AccessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOjEwLCJrZXkiOjE3MDE1MjMwODIxNDB9LCJpYXQiOjE3MDE1MjMwODIsImV4cCI6MTcwMTYwOTQ4Mn0.6pDedl7nkePopiCreNdZxgwX-CfbuY7zGW0ZbYPtFYs"
+		}
+	]
+}

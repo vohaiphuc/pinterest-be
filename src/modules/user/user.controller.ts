@@ -59,6 +59,7 @@ export class UserController {
     @User("data") data: TUserAuth,
     @UploadedFile() file: Express.Multer.File,
   ) {
+    console.log("🚀 ~ file: user.controller.ts:62 ~ UserController ~ file:", file)
     const { nguoi_dung_id } = data
     return this.userService.updateAvatar(nguoi_dung_id, file)
   }

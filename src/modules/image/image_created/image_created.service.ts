@@ -104,7 +104,7 @@ export class ImageCreatedService {
 
         await this.prisma.hinh_anh.createMany({
             data: uploadedFileNames.map(img => ({
-                ten_hinh,
+                ten_hinh: ten_hinh ? ten_hinh : img[0],
                 mo_ta,
                 duong_dan: img[1],
                 nguoi_dung_id
