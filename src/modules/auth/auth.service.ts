@@ -24,7 +24,7 @@ export class AuthService {
     }
 
     if (!bcrypt.compareSync(mat_khau, checkUser.mat_khau)) {
-      return new HttpException(Message.LOGIN.PW_FAIL, HttpStatus.BAD_REQUEST)
+      throw new HttpException(Message.LOGIN.PW_FAIL, HttpStatus.BAD_REQUEST)
     }
 
     const payload: IUserDataAuth = {

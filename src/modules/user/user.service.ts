@@ -68,14 +68,13 @@ export class UserService {
 
   async updateAvatar(nguoi_dung_id: number, file: Express.Multer.File) {
     const user = await this.checkUserExistence(nguoi_dung_id)
-    const fileCompressed = compress_img(file)
+    const fileCompressed = await compress_img(file)
 
-    user.anh_dai_dien = fileCompressed.filename
-    const data = await this.prisma.nguoi_dung.update({
+    user.anh_dai_dien = "public/img_compress/" + fileCompressed.filename
+    await this.prisma.nguoi_dung.update({
       where: { nguoi_dung_id },
       data: user
     })
-    return ResponseData(HttpStatus.OK, Message.IMAGE.UPLOAD_SUCCESS, data)
-
+    return ResponseData(HttpStatus.OK, Message.USER.UPDATE_AVATAR_SUCCESS, user.anh_dai_dien)
   }
 }

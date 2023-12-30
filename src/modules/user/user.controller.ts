@@ -8,6 +8,7 @@ import { HttpExceptionFilter } from 'src/filters/http-exception.fitler';
 import { UpdateInfoDto, UpdatePasswordDto } from './dto/update-user.dto';
 import { UploadImageDto } from '../image/dto/upload-image.dto';
 import { imageInterceptor } from 'src/common/utils/upload-img-utils';
+import { UpdateAvatarDto } from '../image/dto/update-avatar.dto';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
@@ -17,7 +18,7 @@ import { imageInterceptor } from 'src/common/utils/upload-img-utils';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @Get("profile")
+  @Get("info")
   @ApiOperation({ summary: 'LẤY: thông tin người dùng' })
   getInfo(
     @User('data') data: TUserAuth,
@@ -53,7 +54,7 @@ export class UserController {
   @UseInterceptors(imageInterceptor)
   @ApiOperation({ summary: "CẬP NHẬT: ảnh đại diện" })
   @ApiConsumes('multipart/form-data')
-  @ApiBody({ type: UploadImageDto })
+  @ApiBody({ type: UpdateAvatarDto })
   updateAvatar(
     @User("data") data: TUserAuth,
     @UploadedFile() file: Express.Multer.File,

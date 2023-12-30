@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { ResponseData } from 'src/common/utils/response.utils';
 import * as compress_images from 'compress-images';
 import { UserService } from 'src/modules/user/user.service';
@@ -16,6 +16,25 @@ export class ImageCreatedService {
     async getImages() {
         const data = await this.prisma.hinh_anh.findMany({})
         return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_ALL, data)
+    }
+
+    async getImagesWithSavedInfo(nguoi_dung_id: number) {
+        await this.userService.checkUserExistence(nguoi_dung_id)
+        const data = await this.prisma.hinh_anh.findMany({
+            include: {
+                luu_anh: {
+                    where: {
+                        da_luu: true,
+                        nguoi_dung_id,
+                    }
+                }
+            },
+        })
+        const convertData = data.map(val => ({
+            ...val,
+            luu_anh: val.luu_anh?.[0]
+        }))
+        return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_ALL, convertData)
     }
 
     async searchImage(s: string) {
@@ -65,16 +84,46 @@ export class ImageCreatedService {
 
     async uploadImage(nguoi_dung_id: number, file: Express.Multer.File) {
         await this.userService.checkUserExistence(nguoi_dung_id)
-        const fileCompressed = compress_img(file)
+        const fileCompressed = await compress_img(file)
         return ResponseData(HttpStatus.OK, Message.IMAGE.UPLOAD_SUCCESS, fileCompressed.filename)
+    }
+
+    async uploadImages(nguoi_dung_id: number, file: Express.Multer.File[], ten_hinh: string, mo_ta: string) {
+
+        const uploadedFileNames: string[][] = [];
+
+        for (const f of file) {
+            const fileCompressed = await compress_img(f);
+            const fileName = fileCompressed.filename;
+            const filePath = "public/img_compress/" + fileCompressed.filename
+
+            // Save the file details in the database using Prisma
+            uploadedFileNames.push([fileName, filePath]);
+        }
+        console.log({ uploadedFileNames });
+
+        await this.prisma.hinh_anh.createMany({
+            data: uploadedFileNames.map(img => ({
+                ten_hinh,
+                mo_ta,
+                duong_dan: img[1],
+                nguoi_dung_id
+            }))
+        });
+        return ResponseData(HttpStatus.OK, Message.IMAGE.UPLOAD_SUCCESS, "")
     }
 
     async getImagesUser(nguoi_dung_id: number) {
         const user = await this.userService.checkUserExistence(nguoi_dung_id)
         const images = await this.prisma.hinh_anh.findMany({
-            where: { nguoi_dung_id: user.nguoi_dung_id }
+            where: { nguoi_dung_id: user.nguoi_dung_id },
+            include: { luu_anh: true }
         })
-        return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_UPLOAD, images)
+        const convertImages = images.map(item => ({
+            ...item,
+            luu_anh: item.luu_anh?.[0]
+        }))
+        return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_UPLOAD, convertImages)
     }
 
     async checkImageExistence(hinh_id: number) {

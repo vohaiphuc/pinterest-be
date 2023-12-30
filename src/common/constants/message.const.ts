@@ -17,7 +17,7 @@ export const Message = {
     IMAGE: {
         LIST_ALL: "Danh sách tất cả hình ảnh",
         LIST_SEARCH: "Danh sách tìm kiếm hình ảnh",
-        LIST_UPLOAD: "Danh sách hình ảnh đã đăng của người dùng",
+        LIST_UPLOAD: "Danh sách hình ảnh người dùng đã đăng",
         LIST_SAVE: "Danh sách hình đã lưu",
         DETAIL: "Chi tiết hình ảnh",
         SAVED: "Đã lưu",
@@ -35,5 +35,6 @@ export const Message = {
         UPDATE_INFO_SUCCESS: "Cập nhật thông tin tài khoản thành công",
         UPDATE_PASSWORD_SUCCESS: "Thay đổi mật khẩu thành công",
         UPDATE_PASSWORD_FAIL_INCORRECT: "Thay đổi mật khẩu thất bại",
+        UPDATE_AVATAR_SUCCESS: "Thay đổi ảnh đại diện thành công",
     },
 }

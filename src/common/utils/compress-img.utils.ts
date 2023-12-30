@@ -1,7 +1,7 @@
 import * as compress_images from 'compress-images';
 
-export const compress_img = (file: Express.Multer.File): Express.Multer.File => {
-    compress_images(
+export const compress_img = async (file: Express.Multer.File): Promise<Express.Multer.File> => {
+    await compress_images(
         process.cwd() + "/public/img/" + file.filename,
         process.cwd() + "/public/img_compress/",
         { compress_force: false, statistic: true, autoupdate: true },

@@ -13,10 +13,22 @@ export class ImageSavedService {
 
     async getSavedImages(nguoi_dung_id: number) {
         await this.userService.checkUserExistence(nguoi_dung_id)
-        const data = await this.prisma.luu_anh.findMany({
-            where: { nguoi_dung_id }
+        const data = await this.prisma.hinh_anh.findMany({
+            include: { luu_anh: true },
+            where: {
+                luu_anh: {
+                    some: {
+                        nguoi_dung_id,
+                        da_luu: true
+                    }
+                },
+            },
         })
-        return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_SAVE, data)
+        const convertData = data.map(item => ({
+            ...item,
+            luu_anh: item.luu_anh?.[0]
+        }))
+        return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_SAVE, convertData)
     }
 
     async saveImage(nguoi_dung_id: number, hinh_id: number, save: boolean) {
