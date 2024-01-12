@@ -13,6 +13,9 @@ export const Message = {
     COMMENT: {
         LIST_ALL: "Danh sách bình luận",
         SUCCESS: "Đã bình luận",
+        DELETE_SUCESS: "Xóa bình luận thành công",
+        DELETE_FAIL_NONEXISTED: "Bình luận không tồn tại",
+        DELETE_FAIL_UNAUTHORIZED: "Người dùng không có quyền xóa bình luận này",
     },
     IMAGE: {
         LIST_ALL: "Danh sách tất cả hình ảnh",

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
@@ -33,5 +33,17 @@ export class CommentController {
     const { hinh_id, noi_dung } = body
     const { nguoi_dung_id } = data
     return this.commentService.comment(nguoi_dung_id, +hinh_id, noi_dung)
+  }
+
+  @Delete(":id")
+  @ApiOperation({ summary: "XÓA: bình luận" })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  delete(
+    @User('data') data: TUserAuth,
+    @Param('id') binh_luan_id: string,
+  ) {
+    const { nguoi_dung_id } = data
+    return this.commentService.delete(nguoi_dung_id, +binh_luan_id)
   }
 }

@@ -15,7 +15,15 @@ export class CommentService {
 
     async getComments(hinh_id: number) {
         const data = await this.prisma.binh_luan.findMany({
-            where: { hinh_id }
+            where: { hinh_id },
+            include: {
+                nguoi_dung: {
+                    select: {
+                        ho_ten: true,
+                        anh_dai_dien: true,
+                    }
+                }
+            }
         })
         return ResponseData(HttpStatus.OK, Message.COMMENT.LIST_ALL, data)
     }
@@ -33,5 +41,22 @@ export class CommentService {
             data: newComment
         })
         return ResponseData(HttpStatus.OK, Message.COMMENT.SUCCESS, "")
+    }
+
+    async delete(nguoi_dung_id: number, binh_luan_id: number) {
+        const comment = await this.prisma.binh_luan.findUnique({
+            where: { binh_luan_id }
+        })
+        if (!comment) {
+            throw new HttpException(Message.COMMENT.DELETE_FAIL_NONEXISTED, HttpStatus.UNAUTHORIZED)
+        }
+        // verify ownership
+        if (comment.nguoi_dung_id !== nguoi_dung_id) {
+            throw new HttpException(Message.COMMENT.DELETE_FAIL_UNAUTHORIZED, HttpStatus.UNAUTHORIZED)
+        }
+        await this.prisma.binh_luan.delete({
+            where: { binh_luan_id }
+        })
+        return ResponseData(HttpStatus.OK, Message.COMMENT.DELETE_SUCESS, "")
     }
 }
