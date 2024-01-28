@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ea89ff08-bcb8-404e-8ad9-1599b1affb4b",
+		"_postman_id": "d01e79a4-7a78-4b79-8fe2-247b2718238e",
 		"name": "Node37 - Pinterest",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "17651370"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32115896"
 	},
 	"item": [
 		{
@@ -20,7 +20,17 @@
 						}
 					}
 				},
-				"url": "localhost:8080/auth/register"
+				"url": {
+					"raw": "localhost:8080/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
 			},
 			"response": []
 		},
@@ -38,7 +48,17 @@
 						}
 					}
 				},
-				"url": "localhost:8080/auth/login"
+				"url": {
+					"raw": "localhost:8080/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
 			},
 			"response": []
 		},
@@ -53,7 +73,16 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/user/info"
+				"url": {
+					"raw": "{{domain}}/user/info",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"info"
+					]
+				}
 			},
 			"response": []
 		},
@@ -77,7 +106,16 @@
 						}
 					}
 				},
-				"url": "{{domain}}/user/update-info"
+				"url": {
+					"raw": "{{domain}}/user/update-info",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"update-info"
+					]
+				}
 			},
 			"response": []
 		},
@@ -101,7 +139,16 @@
 						}
 					}
 				},
-				"url": "{{domain}}/user/update-password"
+				"url": {
+					"raw": "{{domain}}/user/update-password",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"update-password"
+					]
+				}
 			},
 			"response": []
 		},
@@ -126,7 +173,16 @@
 						}
 					]
 				},
-				"url": "{{domain}}/user/update-avatar"
+				"url": {
+					"raw": "{{domain}}/user/update-avatar",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"user",
+						"update-avatar"
+					]
+				}
 			},
 			"response": []
 		},
@@ -135,7 +191,15 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{domain}}/image"
+				"url": {
+					"raw": "{{domain}}/image",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image"
+					]
+				}
 			},
 			"response": []
 		},
@@ -150,7 +214,16 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/image/saved-info"
+				"url": {
+					"raw": "{{domain}}/image/saved-info",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"saved-info"
+					]
+				}
 			},
 			"response": []
 		},
@@ -165,7 +238,17 @@
 						"type": "text"
 					}
 				],
-				"url": "localhost:8080/image/user-uploaded"
+				"url": {
+					"raw": "localhost:8080/image/user-uploaded",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"image",
+						"user-uploaded"
+					]
+				}
 			},
 			"response": []
 		},
@@ -205,7 +288,17 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/image/detail/94"
+				"url": {
+					"raw": "{{domain}}/image/detail/94",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"detail",
+						"94"
+					]
+				}
 			},
 			"response": []
 		},
@@ -220,7 +313,16 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/image/95"
+				"url": {
+					"raw": "{{domain}}/image/95",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"95"
+					]
+				}
 			},
 			"response": []
 		},
@@ -250,7 +352,16 @@
 						}
 					]
 				},
-				"url": "{{domain}}/image/upload"
+				"url": {
+					"raw": "{{domain}}/image/upload",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"image",
+						"upload"
+					]
+				}
 			},
 			"response": []
 		},
@@ -265,7 +376,15 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/saved-image"
+				"url": {
+					"raw": "{{domain}}/saved-image",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"saved-image"
+					]
+				}
 			},
 			"response": []
 		},
@@ -280,7 +399,17 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/saved-image/check/94"
+				"url": {
+					"raw": "{{domain}}/saved-image/check/94",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"saved-image",
+						"check",
+						"94"
+					]
+				}
 			},
 			"response": []
 		},
@@ -295,7 +424,17 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/saved-image/save/94"
+				"url": {
+					"raw": "{{domain}}/saved-image/save/94",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"saved-image",
+						"save",
+						"94"
+					]
+				}
 			},
 			"response": []
 		},
@@ -310,7 +449,17 @@
 						"type": "text"
 					}
 				],
-				"url": "{{domain}}/saved-image/unsave/94"
+				"url": {
+					"raw": "{{domain}}/saved-image/unsave/94",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"saved-image",
+						"unsave",
+						"94"
+					]
+				}
 			},
 			"response": []
 		},
@@ -319,7 +468,16 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{domain}}/comment/94"
+				"url": {
+					"raw": "{{domain}}/comment/94",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"comment",
+						"94"
+					]
+				}
 			},
 			"response": []
 		},
@@ -343,7 +501,16 @@
 						}
 					}
 				},
-				"url": "{{domain}}/comment/"
+				"url": {
+					"raw": "{{domain}}/comment/",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"comment",
+						""
+					]
+				}
 			},
 			"response": []
 		}
