@@ -13,23 +13,41 @@ export class ImageCreatedService {
     ) { }
     prisma = new PrismaClient()
 
-    async getImages() {
-        const data = await this.prisma.hinh_anh.findMany({})
+    async getImages(pagination: boolean, pageIndex: number, pageSize: number) {
+        const data = pagination
+            ? await this.prisma.hinh_anh.findMany({
+                take: pageSize,
+                skip: pageIndex * pageSize,
+            })
+            : await this.prisma.hinh_anh.findMany({})
         return ResponseData(HttpStatus.OK, Message.IMAGE.LIST_ALL, data)
     }
 
-    async getImagesWithSavedInfo(nguoi_dung_id: number) {
+    async getImagesWithSavedInfo(nguoi_dung_id: number, pagination: boolean, pageIndex: number, pageSize: number) {
         await this.userService.checkUserExistence(nguoi_dung_id)
-        const data = await this.prisma.hinh_anh.findMany({
-            include: {
-                luu_anh: {
-                    where: {
-                        da_luu: true,
-                        nguoi_dung_id,
+        const data = pagination
+            ? await this.prisma.hinh_anh.findMany({
+                take: pageSize,
+                skip: pageIndex * pageSize,
+                include: {
+                    luu_anh: {
+                        where: {
+                            da_luu: true,
+                            nguoi_dung_id,
+                        }
                     }
-                }
-            },
-        })
+                },
+            })
+            : await this.prisma.hinh_anh.findMany({
+                include: {
+                    luu_anh: {
+                        where: {
+                            da_luu: true,
+                            nguoi_dung_id,
+                        }
+                    }
+                },
+            })
         const convertData = data.map(val => ({
             ...val,
             luu_anh: val.luu_anh?.[0]
@@ -74,7 +92,7 @@ export class ImageCreatedService {
             throw new HttpException(Message.IMAGE.DELETE_FAIL_INVALID, HttpStatus.BAD_REQUEST)
         }
         if (user.nguoi_dung_id !== image.nguoi_dung_id) {
-            return new HttpException(Message.IMAGE.DELETE_FAIL_UNAUTHORIZED, HttpStatus.BAD_REQUEST)
+            throw new HttpException(Message.IMAGE.DELETE_FAIL_UNAUTHORIZED, HttpStatus.BAD_REQUEST)
         }
         await this.prisma.hinh_anh.delete({
             where: { hinh_id: id }

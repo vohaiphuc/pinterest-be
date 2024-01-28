@@ -3,9 +3,9 @@ import { CommentService } from './comment.service';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { IUserTokenAuth, TUserAuth } from '../auth/dto/user-auth.dto';
-import { HttpExceptionFilter } from 'src/filters/http-exception.fitler';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.fitler';
 import { CommentDto } from './dto/comment.dto';
-import { User } from 'src/decorators/user.decorator';
+import { User } from 'src/common/decorators/user.decorator';
 
 @UseFilters(HttpExceptionFilter)
 @ApiTags("Bình luận")

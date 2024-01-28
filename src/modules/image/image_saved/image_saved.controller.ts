@@ -1,10 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Req, UseFilters, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, UseFilters, UseGuards } from '@nestjs/common';
 import { ImageSavedService } from './image_saved.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/modules/auth/auth.guard';
 import { TUserAuth } from 'src/modules/auth/dto/user-auth.dto';
-import { HttpExceptionFilter } from 'src/filters/http-exception.fitler';
-import { User } from 'src/decorators/user.decorator';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.fitler';
+import { User } from 'src/common/decorators/user.decorator';
 
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)

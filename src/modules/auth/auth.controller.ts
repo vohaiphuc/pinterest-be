@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { HttpExceptionFilter } from 'src/filters/http-exception.fitler';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.fitler';
 import { LoginDto } from './dto/login-auth.dto';
 import { RegisterDto } from './dto/register-auth.dto';
 

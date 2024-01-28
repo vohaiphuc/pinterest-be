@@ -1,15 +1,14 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Query, Req, UploadedFile, UploadedFiles, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseBoolPipe, Post, Query, UploadedFiles, UseFilters, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ImageCreatedService } from './image_created.service';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/modules/auth/auth.guard';
-import { Request } from 'express';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { IUserDataAuth, IUserTokenAuth, TUserAuth } from 'src/modules/auth/dto/user-auth.dto';
-import { HttpExceptionFilter } from 'src/filters/http-exception.fitler';
-import { User } from 'src/decorators/user.decorator';
+import { TUserAuth } from 'src/modules/auth/dto/user-auth.dto';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.fitler';
+import { User } from 'src/common/decorators/user.decorator';
 import { UploadImageDto } from '../dto/upload-image.dto';
 import { imageInterceptor, imagesInterceptor } from 'src/common/utils/upload-img-utils';
+import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
+import { PaginationPipe } from 'src/common/pipes/pagination.pipe';
 
 @UseFilters(HttpExceptionFilter)
 @ApiTags("Image")
@@ -19,8 +18,12 @@ export class ImageCreatedController {
 
   @Get("/")
   @ApiOperation({ summary: "LẤY: danh sách tất cả hình ảnh" })
-  getImages() {
-    return this.imageCreatedService.getImages()
+  getImages(
+    @Query('pagination', new ParseBoolPipe({ optional: true })) pagination: boolean = false,
+    @Query('pageIndex', new PaginationPipe(1)) pageIndex: number = 1,
+    @Query('pageSize', new PaginationPipe(10)) pageSize: number = 10
+  ) {
+    return this.imageCreatedService.getImages(pagination, pageIndex, pageSize)
   }
 
   @ApiBearerAuth()
@@ -28,9 +31,12 @@ export class ImageCreatedController {
   @Get("/saved-info")
   @ApiOperation({ summary: "LẤY: danh sách tất cả hình ảnh, kèm theo thông tin [Đã lưu]" })
   getImagesWithSavedInfo(
-    @User("data") data: TUserAuth
+    @User("data") data: TUserAuth,
+    @Query('pagination', new ParseBoolPipe({ optional: true })) pagination: boolean = false,
+    @Query('pageIndex', new PaginationPipe(1)) pageIndex: number = 1,
+    @Query('pageSize', new PaginationPipe(10)) pageSize: number = 10
   ) {
-    return this.imageCreatedService.getImagesWithSavedInfo(data.nguoi_dung_id)
+    return this.imageCreatedService.getImagesWithSavedInfo(data.nguoi_dung_id, pagination, pageIndex, pageSize)
   }
 
   @Get("/user-uploaded")
@@ -38,9 +44,9 @@ export class ImageCreatedController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   getImagesUser(
-    @Req() req: Request & { user: IUserTokenAuth }
+    @User('data') data: TUserAuth,
   ) {
-    const nguoi_dung_id: number = req.user.data.nguoi_dung_id
+    const { nguoi_dung_id } = data
     return this.imageCreatedService.getImagesUser(nguoi_dung_id)
   }
 
@@ -55,9 +61,9 @@ export class ImageCreatedController {
   @Get('/detail/:id')
   @ApiOperation({ summary: "LẤY: thông tin hình ảnh theo ID" })
   getImageDetail(
-    @Param('id') id: string
+    @Param('id', ParseIntPipe) id: number
   ) {
-    return this.imageCreatedService.getImageDetail(+id);
+    return this.imageCreatedService.getImageDetail(id);
   }
 
   @Delete(':id')
@@ -65,11 +71,11 @@ export class ImageCreatedController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   removeImage(
-    @Req() req: Request & { user: IUserTokenAuth },
-    @Param('id') id: string
+    @User('data') data: TUserAuth,
+    @Param('id', ParseIntPipe) id: number
   ) {
-    const nguoi_dung_id: number = req.user.data.nguoi_dung_id
-    return this.imageCreatedService.removeImage(nguoi_dung_id, +id);
+    const { nguoi_dung_id } = data
+    return this.imageCreatedService.removeImage(nguoi_dung_id, id);
   }
 
   @Post("upload")
